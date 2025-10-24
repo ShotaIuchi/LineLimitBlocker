@@ -1,0 +1,5 @@
+**/*.map
+**/tsconfig.json
+**/.gitignore
+**/node_modules/**/@types/**
+**/src/**

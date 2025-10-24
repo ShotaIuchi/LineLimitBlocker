@@ -1,0 +1,66 @@
+{
+  "name": "line-limit-blocker",
+  "displayName": "LineLimitBlocker — 行数上限でブロック",
+  "description": "指定行数を超えるファイルを自動で閉じるVSCode拡張機能（デフォルト: 1000行）",
+  "version": "0.0.1",
+  "publisher": "your-name-or-org",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": [
+    "*",
+    "onCommand:lineLimitBlocker.openAnywayOnce"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "lineLimitBlocker.openAnywayOnce",
+        "title": "LineLimitBlocker: 次の1回だけ許可"
+      }
+    ],
+    "configuration": {
+      "title": "LineLimitBlocker 設定",
+      "properties": {
+        "lineLimitBlocker.maxLines": {
+          "type": "number",
+          "default": 1000,
+          "minimum": 1,
+          "markdownDescription": "この行数を超えるファイルを閉じます。"
+        },
+        "lineLimitBlocker.languagesAllowlist": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "markdownDescription": "この言語IDのファイルは制限を無視して開けます（例: ['markdown', 'plaintext']）。"
+        },
+        "lineLimitBlocker.pathAllowlist": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "markdownDescription": "このパターンに一致するパスは制限を無視（例: ['**/README.md', '**/*.log']）。"
+        },
+        "lineLimitBlocker.showInfoMessage": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "ファイルが閉じられた際に通知を表示するか。"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run build",
+    "build": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "typescript": "^5.6.3",
+    "vsce": "^3.0.0"
+  },
+  "dependencies": {
+    "minimatch": "^9.0.3"
+  }
+}
