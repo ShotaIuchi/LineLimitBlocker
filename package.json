@@ -12,7 +12,7 @@
     "*",
     "onCommand:lineLimitBlocker.openAnywayOnce"
   ],
-  "main": "./dist/extension.js",
+  "main": "./dist/extensions.js",
   "contributes": {
     "commands": [
       {
@@ -45,6 +45,11 @@
           "type": "boolean",
           "default": true,
           "markdownDescription": "ファイルが閉じられた際に通知を表示するか。"
+        },
+        "lineLimitBlocker.debugMode": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "デバッグモード。有効にすると詳細なログが出力されます。"
         }
       }
     }
@@ -57,8 +62,9 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.30",
+    "@types/vscode": "^1.85.0",
     "typescript": "^5.6.3",
-    "vsce": "^3.0.0"
+    "@vscode/vsce": "^3.0.0"
   },
   "dependencies": {
     "minimatch": "^9.0.3"

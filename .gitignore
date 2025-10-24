@@ -1,0 +1,99 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build output
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# IDE and Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+log/
+
+# Testing
+coverage/
+*.lcov
+.nyc_output/
+
+# Package manager
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# Optional: TypeScript cache
+*.tscache
+.eslintcache
+.stylelintcache
+
+# Optional: Next.js
+.next/
+out/
+
+# Optional: Nuxt.js
+.nuxt/
+dist/
+
+# Optional: Gatsby
+.cache/
+public/
+
+# Optional: VuePress
+.vuepress/dist
+
+# Optional: Serverless
+.serverless/
+
+# Optional: FuseBox
+.fusebox/
+
+# Optional: DynamoDB Local
+.dynamodb/
+
+# Optional: TernJS
+.tern-port
+
+# Optional: VS Code history
+.history/
+
+# Optional: misc
+*.bak
+*.backup
+*.old
