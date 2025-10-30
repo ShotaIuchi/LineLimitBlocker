@@ -1,0 +1,6 @@
+{
+    // "lineLimitBlocker.maxLines": 999,
+    "lineLimitBlocker.maxLinesOverrides": {
+        "**/*.log": 999
+    }
+}

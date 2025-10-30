@@ -7,6 +7,7 @@ type Config = {
   pathAllowlist: string[];
   showInfoMessage: boolean;
   debugMode: boolean;
+  maxLinesOverrides: Record<string, number>;
 };
 
 let bypassOnce = false;
@@ -30,11 +31,32 @@ export function activate(context: vscode.ExtensionContext) {
       languagesAllowlist: cfg.get('languagesAllowlist', []),
       pathAllowlist: cfg.get('pathAllowlist', []),
       showInfoMessage: cfg.get('showInfoMessage', true),
-      debugMode: cfg.get('debugMode', false)
+      debugMode: cfg.get('debugMode', false),
+      maxLinesOverrides: cfg.get('maxLinesOverrides', {})
     };
   };
 
   const getAllowMatchers = () => getConfig().pathAllowlist.map(p => new Minimatch(p));
+
+  /*
+   * ファイルパスに対して適用される maxLines 値を取得する
+   * maxLinesOverrides でマッチするパターンがあればその値を返し、なければデフォルトの maxLines を返す
+   */
+  const getMaxLinesForPath = (filePath: string): number => {
+    const cfg = getConfig();
+
+    // maxLinesOverrides をチェック
+    for (const [pattern, maxLines] of Object.entries(cfg.maxLinesOverrides)) {
+      const matcher = new Minimatch(pattern);
+      if (matcher.match(filePath)) {
+        debugLog(`File matches override pattern "${pattern}", using maxLines: ${maxLines}`);
+        return maxLines;
+      }
+    }
+
+    // デフォルト値を返す
+    return cfg.maxLines;
+  };
 
   async function checkAndClose(doc: vscode.TextDocument) {
     debugLog('checkAndClose called for:', doc.uri.fsPath, 'lineCount:', doc.lineCount);
@@ -73,9 +95,10 @@ export function activate(context: vscode.ExtensionContext) {
       return;
     }
 
-    // 行数チェック
-    debugLog(`Checking line count: ${doc.lineCount} > ${cfg.maxLines}?`);
-    if (doc.lineCount <= cfg.maxLines) {
+    // 行数チェック（パターンマッチングによるオーバーライドを適用）
+    const maxLines = getMaxLinesForPath(filePath);
+    debugLog(`Checking line count: ${doc.lineCount} <= ${maxLines}?`);
+    if (doc.lineCount <= maxLines) {
       debugLog('File within line limit, allowing');
       return;
     }
@@ -105,7 +128,7 @@ export function activate(context: vscode.ExtensionContext) {
 
           if (cfg.showInfoMessage) {
             vscode.window.showWarningMessage(
-              `LineLimitBlocker: '${basename(filePath)}' は ${doc.lineCount} 行あり、上限 (${cfg.maxLines}) を超えています。`,
+              `LineLimitBlocker: '${basename(filePath)}' は ${doc.lineCount} 行あり、上限 (${maxLines}) を超えています。`,
               '次の1回だけ許可'
             ).then(async (action) => {
               if (action) {

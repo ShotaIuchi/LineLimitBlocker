@@ -4,9 +4,11 @@
 
 ## 設定項目
 - `lineLimitBlocker.maxLines`: 最大許容行数（既定値: 1000）
+- `lineLimitBlocker.maxLinesOverrides`: ファイル名パターンごとに行数上限をオーバーライド（例: `{ "**/*.md": 5000, "**/*.log": 10000 }`）
 - `lineLimitBlocker.languagesAllowlist`: 制限を無視する言語ID
 - `lineLimitBlocker.pathAllowlist`: 制限を無視するパスパターン
 - `lineLimitBlocker.showInfoMessage`: タブが閉じられた際の通知表示の有無
+- `lineLimitBlocker.debugMode`: デバッグモード（既定値: false）
 
 ## コマンド
 - **LineLimitBlocker: 次の1回だけ許可** — 次の1回のファイルオープンを許可します。
