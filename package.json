@@ -4,6 +4,7 @@
   "description": "指定行数を超えるファイルを自動で閉じるVSCode拡張機能（デフォルト: 1000行）",
   "version": "0.0.1",
   "publisher": "your-name-or-org",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.85.0"
   },
